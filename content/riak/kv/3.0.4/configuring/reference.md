@@ -27,7 +27,7 @@ aliases:
 [plan backend multi]: ../../setup/planning/backend/multi
 [config backend multi]: ../../setup/planning/backend/multi/#configuring-multiple-backends-1
 [use admin riak cli]: ../../using/admin/riak-cli
-[use admin riak-admin]: ../../using/admin/riak-admin
+[use admin riak admin]: ../../using/admin/riak admin
 [glossary aae]: ../../learn/glossary/#active-anti-entropy-aae
 [use ref search 2i]: ../../using/reference/secondary-indexes
 [cluster ops bucket types]: ../../using/cluster-operations/bucket-types
@@ -194,7 +194,7 @@ parameters below.
 
 <tr>
 <td><code>platform_bin_dir</code></td>
-<td>The directory in which the <a href="../../using/admin/riak-admin"><code>riak-admin</code></a>,
+<td>The directory in which the <a href="../../using/admin/riak admin"><code>riak admin</code></a>,
 <code>riak-debug</code>, and now-deprecated <code>search-cmd</code>
 executables are stored.</td>
 <td><code>./bin</code></td>
@@ -1371,6 +1371,9 @@ to <code>off</code> can cut down on system resource usage.
 <td>The number of seconds which represents the length of the period in which the next rebuild will be scheduled. So if all vnodes are scheduled to rebuild at the same time, they will actually rebuild randomly between 0 and this value (in seconds) after the rebuild time.</td>
 <td><code>345600</code></td>
 </tr>
+
+</tbody>
+</table>
 
 ## Intra-Cluster Handoff
 
