@@ -35,7 +35,7 @@ directory "#{$cache_dir}"
 ######################################################################
 ### Version Checks
 
-min_hugo_version = "0.16"
+min_hugo_version = "0.109"
 min_ruby_version = "2.2.5"
 
 # Check if Ruby is up to date
