@@ -6,8 +6,8 @@ ruby ">2.2.5"
 #      1. Each gem is current
 #      2. Each gem is _used_
 
-gem "sass", "~>3.4.22"
-gem "autoprefixer-rails", "~>6.3.6"
+#gem "sass", "~>3.4.22"
+#gem "autoprefixer-rails", "~>6.3.6"
 gem "sprockets", "~>3.7"
 gem "coffee-script", "~>2.4.1"
 gem "uglifier", "~>3.0.0"

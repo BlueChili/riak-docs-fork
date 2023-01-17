@@ -7,7 +7,7 @@ LABEL maintainer="Peter Clark <peter.clark@tiot.jp>"
 COPY ./run.sh /run.sh
 RUN chmod u+x /run.sh
 
-ENV HUGO_VERSION=0.25.1
+ENV HUGO_VERSION=0.109.0
 #ENV HUGO_VERSION=0.29
 #ENV HUGO_VERSION=0.39
 #ENV HUGO_VERSION=0.49
