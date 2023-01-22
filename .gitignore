@@ -30,3 +30,6 @@ static/css/main.css.map
 vendor/
 .bundle/
 
+# Hugo build files
+.hugo_build.lock
+resources/

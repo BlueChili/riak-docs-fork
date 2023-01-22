@@ -17,14 +17,11 @@
 # descriptions thereof.
 
 require_relative 'rake_libs/compile_js'
-require_relative 'rake_libs/compile_css'
 require_relative 'rake_libs/s3_deploy'
 require_relative 'rake_libs/downloads_metadata_generator_sftp'
 #require_relative 'rake_libs/downloads_metadata_generator'
 require_relative 'rake_libs/projects_metadata_generator'
 
-$css_source = "./dynamic/css"
-$css_dest   = "./static/css"
 $js_source  = "./dynamic/js"
 $js_dest    = "./static/js"
 $cache_dir  = "./dynamic/.cache"
@@ -32,14 +29,13 @@ $hugo_dest  = "./output" # Should always be set to `publishdir` from config.yml
 
 ### Rake directory definitions
 directory "#{$js_dest}"
-directory "#{$css_dest}"
 directory "#{$cache_dir}"
 
 
 ######################################################################
 ### Version Checks
 
-min_hugo_version = "0.16"
+min_hugo_version = "0.109"
 min_ruby_version = "2.2.5"
 
 # Check if Ruby is up to date
@@ -86,7 +82,7 @@ end;
 #TODO<drew.pirrone.brusse@gmail>: These `rm -rf`s are maybe a bit much? Should
 # we be more precise with what we delete (and, if so, how)?
 desc      "Clean dynamically generated content (does not clean Hugo content)"
-task      :clean => ['clean:js', 'clean:css']
+task      :clean => ['clean:js']
 namespace :clean do
   desc "Clean dynamically generated JS"
   task :js do
@@ -94,16 +90,6 @@ namespace :clean do
     # (see deploy:fetch_archived_content). We don't want to remove those files.
     js_file_list = Dir["#{$js_dest}/**/*"].reject {|f| /standalone/.match(f) }
     js_file_list.each do |f|
-      log_deletion(f)
-      FileUtils.rm(f)
-    end
-  end
-  desc "Clean dynamically generated CSS"
-  task :css do
-    # The standalone/ directory may exist if we've extracted archived content
-    # (see deploy:fetch_archived_content). We don't want to remove those files.
-    css_file_list = Dir["#{$css_dest}/**/*"].reject {|f| /standalone/.match(f) }
-    css_file_list.each do |f|
       log_deletion(f)
       FileUtils.rm(f)
     end
@@ -119,19 +105,15 @@ end
 ########
 # Build
 desc      "Compile compressed JS and compressed CSS"
-task      :build => ['clean', 'build:css', 'build:js']
+task      :build => ['clean', 'build:js']
 namespace :build do
-  task :css => ["#{$css_dest}", 'clean:css'] do compile_css(debug: false); end
   task :js  => ["#{$js_dest}", 'clean:js']   do compile_js(debug: false); end
 
   ################
   # Build : Debug
-  desc      "Compile human-readable JS and compile human-readable CSS"
-  task      :debug => ["#{$css_dest}", "#{$js_dest}",
-                       'build:debug:css', 'build:debug:js']
+  desc      "Compile human-readable JS"
+  task      :debug => ["#{$js_dest}", 'build:debug:js']
   namespace :debug do
-    desc "Compile human-readable CSS"
-    task :css => ["#{$css_dest}"] do compile_css(debug: true); end
 
     desc "Compile human-readable JS"
     task :js  => ["#{$js_dest}"]  do compile_js(debug: true); end
@@ -142,20 +124,18 @@ end
 
 ########
 # Watch
-desc      "Rebuild compressed JS and CSS content on file saves"
-task      :watch do sh 'bundle exec guard -g css js'; end
+desc      "Rebuild compressed JS on file saves"
+task      :watch do sh 'bundle exec guard -g js'; end
 namespace :watch do
 
   task :js  do sh 'bundle exec guard -g js'; end
-  task :css do sh 'bundle exec guard -g css'; end
 
   ################
   # Watch : Debug
   desc      "Rebuild human-readable JS and CSS content on file saves"
-  task      :debug => ['clean'] do sh 'bundle exec guard -g debug_js debug_css'; end
+  task      :debug => ['clean'] do sh 'bundle exec guard -g debug_js'; end
   namespace :debug do
     task :js  do sh 'bundle exec guard -g debug_js'; end
-    task :css do sh 'bundle exec guard -g debug_css'; end
   end
 end
 
@@ -179,7 +159,6 @@ task      :deploy => [
                       'clean',
                       'deploy:fetch_archived_content',
                       'build:js',
-                      'build:css',
                       'hugo'
                      ] do do_deploy(); end
 namespace :deploy do
