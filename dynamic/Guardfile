@@ -34,14 +34,6 @@ group :js do
   end
 end
 
-group :css do
-  guard 'rake', :task => 'build:css' do
-    watch(%r{^dynamic/css/.*\.css$})
-    watch(%r{^dynamic/css/.*\.scss$})
-    watch(%r{^dynamic/css/.*\.sass$})
-  end
-end
-
 group :debug_js do
   guard 'rake', :task => 'build:debug:js' do
     watch(%r{^dynamic/js/.*\.js$})
@@ -49,10 +41,3 @@ group :debug_js do
   end
 end
 
-group :debug_css do
-  guard 'rake', :task => 'build:debug:css' do
-    watch(%r{^dynamic/css/.*\.css$})
-    watch(%r{^dynamic/css/.*\.scss$})
-    watch(%r{^dynamic/css/.*\.sass$})
-  end
-end

@@ -23,7 +23,7 @@
   <title>{{ if $title_supertext }}{{ $title_supertext }} {{ end }}{{ $title }}</title>
 
   {{- if hugo.IsProduction -}}
-  {{- $css := resources.Get "sass/main.scss" | toCSS (dict "targetPath" "/css/main.css" "outputStyle" "compressed") -}}
+  {{- $css := resources.Get "sass/main.scss" | toCSS (dict "targetPath" "/css/main.css" "outputStyle" "compressed") | resources.PostCSS | resources.PostProcess -}}
   <link href="{{- $css.Permalink -}}" media="screen" rel="stylesheet" type="text/css">
   {{- else -}}
   {{- $css := resources.Get "sass/main.scss" | toCSS (dict "targetPath" "/css/main.css") -}}

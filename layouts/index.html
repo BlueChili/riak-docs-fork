@@ -22,7 +22,13 @@
 
   <title>Riak Documentation</title>
 
-  <link href="{{ .Site.BaseURL }}css/main.css" media="screen" rel="stylesheet" type="text/css">
+  {{- if hugo.IsProduction -}}
+  {{- $css := resources.Get "sass/main.scss" | toCSS (dict "targetPath" "/css/main.css" "outputStyle" "compressed") | resources.PostCSS | resources.PostProcess -}}
+  <link href="{{- $css.Permalink -}}" media="screen" rel="stylesheet" type="text/css">
+  {{- else -}}
+  {{- $css := resources.Get "sass/main.scss" | toCSS (dict "targetPath" "/css/main.css") -}}
+  <link href="{{- $css.Permalink -}}" media="screen" rel="stylesheet" type="text/css">
+  {{- end -}}
 
 </head>
 

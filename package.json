@@ -1,0 +1,27 @@
+{
+  "name": "riak-docs-fork",
+  "version": "1.0.0",
+  "description": "[basho docs]: http://docs.basho.com/\r [task list]: https://github.com/basho/private_basho_docs/issues/11\r [middleman]: https://middlemanapp.com/\r [rvm]: https://rvm.io/",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:preview": "hugo --buildDrafts --buildFuture",
+    "build": "hugo",
+    "start": "hugo server --bind=0.0.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TI-Tokyo/riak-docs-fork.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TI-Tokyo/riak-docs-fork/issues"
+  },
+  "homepage": "https://github.com/TI-Tokyo/riak-docs-fork#readme",
+  "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^5.0.0",
+    "postcss": "^8.4.20",
+    "postcss-cli": "^10.1.0"
+  }
+}

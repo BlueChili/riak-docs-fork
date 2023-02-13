@@ -30,6 +30,7 @@ static/css/main.css.map
 vendor/
 .bundle/
 
+node_modules
 # Hugo build files
 hugo_stats.json
 .hugo_build.lock
