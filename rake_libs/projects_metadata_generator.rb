@@ -2,7 +2,7 @@
 # Projects Metadata Generator
 #
 # This file will act as the intermediary for translating the project
-# descriptions that are part of the config.yaml `params.project_descriptions`
+# descriptions that are part of the hugo.yaml `params.project_descriptions`
 # metadata map into something that can be queried by JavaScript running on the
 # live site.
 #
@@ -11,7 +11,7 @@
 # From there the JS responsible for building the version-selector will request
 # the generated file and build out the version list and salient links.
 #
-# See the Project Descriptions map in config.yaml for further details.
+# See the Project Descriptions map in hugo.yaml for further details.
 
 
 $TARGET_FILE = "static/data/project_descriptions.json"
@@ -30,12 +30,12 @@ def generate_projects_metadata()
   version_sets_hash[:__comment] = "This file was automatically generated "    \
                                   "using `rake generate_projects_metadata`. " \
                                   "See the Project Descriptions entry in "    \
-                                  "config.yaml for more information."
+                                  "hugo.yaml for more information."
 
 
-  config_file = YAML.load_file("config.yaml")
-  if (config_file == "config.yaml")
-    Kernel.abort("ERROR: Could not find and read 'config.yaml'. Are you "\
+  config_file = YAML.load_file("hugo.yaml")
+  if (config_file == "hugo.yaml")
+    Kernel.abort("ERROR: Could not find and read 'hugo.yaml'. Are you "\
                  "running Rake from the correct directory?")
   end
 

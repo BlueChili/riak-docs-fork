@@ -31,5 +31,6 @@ vendor/
 .bundle/
 
 # Hugo build files
+hugo_stats.json
 .hugo_build.lock
 resources/

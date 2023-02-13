@@ -10,7 +10,6 @@ services:
       - TZ=Asia/Tokyo
       - HUGO_WATCH=false
       - HUGO_REFRESH_TIME=-1
-      - RAKE_DEBUG=false
       - RAKE_GEN_DOWNS=false
       - RAKE_GEN_PROJECTS=false
       - HUGO_BASEURL=/

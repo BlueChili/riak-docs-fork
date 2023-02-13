@@ -25,7 +25,7 @@ require_relative 'rake_libs/projects_metadata_generator'
 $js_source  = "./dynamic/js"
 $js_dest    = "./static/js"
 $cache_dir  = "./dynamic/.cache"
-$hugo_dest  = "./output" # Should always be set to `publishdir` from config.yml
+$hugo_dest  = "./output" # Should always be set to `publishdir` from hugo.yml
 
 ### Rake directory definitions
 directory "#{$js_dest}"
@@ -35,7 +35,6 @@ directory "#{$cache_dir}"
 ######################################################################
 ### Version Checks
 
-min_hugo_version = "0.109"
 min_ruby_version = "2.2.5"
 
 # Check if Ruby is up to date
@@ -44,23 +43,6 @@ if Gem::Version.new(min_ruby_version) > Gem::Version.new(RUBY_VERSION)
                "       Please upgrade this tool to at least version "\
                "#{min_ruby_version}.\n")
 end
-
-# Check if Hugo is installed, and confirm it's up to date.
-if (`which hugo`.empty?)
-  Kernel.abort("ERROR: No version of Hugo is installed.\n"\
-               "       Please install the latest version of Hugo -- gohugo.io/")
-end
-
-# This regex looks for e.g. "v0.16" -- matching only the "0.16" -- and then we
-# extract the first string from the returned MatchData with the `[0]`
-hugo_version  = /(?<=v)\d+\.\d+/.match(`hugo version`)[0]
-
-if Gem::Version.new(min_hugo_version) > Gem::Version.new(hugo_version)
-  Kernel.abort("ERROR: An old version of Hugo (#{hugo_version}) is in use.\n"\
-               "       Please upgrade this tool to at least version "\
-               "#{min_hugo_version}.\n")
-end
-
 
 ######################################################################
 ### Rake Namespace and Task definitions
@@ -137,18 +119,6 @@ namespace :watch do
   namespace :debug do
     task :js  do sh 'bundle exec guard -g debug_js'; end
   end
-end
-
-
-#######
-# Hugo
-desc      "Generate the static site into #{$hugo_dest}"
-task      :hugo => ['clean:hugo'] do sh "hugo -d #{$hugo_dest}"; end
-namespace :hugo do
-
-  #TODO<drew.pirrone.brusse@gmail>: Add in some way to specify ip/port.
-  desc "Run Hugo Server"
-  task :server do sh "hugo server"; end
 end
 
 

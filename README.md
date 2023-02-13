@@ -43,13 +43,7 @@ We moved to a Docker image to build the docs to avoid the issues with getting th
     cd basho_docs
     ```
    
-1. Build the Docker image:
-
-    ```
-    ./docker/docker-build-image.titokyo.sh
-    ```
-
-1. Run the docker image as a local server to test it all works:
+1. Build & Run the docker image as a local server to test it all works:
 
     ```
     docker-compose -f ./docker/docker-compose.localhost-preview.yaml up riakdocs

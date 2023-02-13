@@ -22,6 +22,9 @@ ignoreFiles: [
 # Default directory to build the completed site
 publishdir: "output"
 
+build:
+  writeStats: true
+
 params:
   # Project Descriptions
   # ====================
