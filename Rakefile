@@ -16,7 +16,7 @@
 # Running `rake` or `rake -T` will output a list of useful commands and
 # descriptions thereof.
 
-require_relative 'rake_libs/compile_js'
+#require_relative 'rake_libs/compile_js'
 require_relative 'rake_libs/s3_deploy'
 require_relative 'rake_libs/downloads_metadata_generator_sftp'
 #require_relative 'rake_libs/downloads_metadata_generator'
@@ -59,76 +59,12 @@ task :default do
 end;
 
 
-########
-# Clean
-#TODO<drew.pirrone.brusse@gmail>: These `rm -rf`s are maybe a bit much? Should
-# we be more precise with what we delete (and, if so, how)?
-desc      "Clean dynamically generated content (does not clean Hugo content)"
-task      :clean => ['clean:js']
-namespace :clean do
-  desc "Clean dynamically generated JS"
-  task :js do
-    # The standalone/ directory may exist if we've extracted archived content
-    # (see deploy:fetch_archived_content). We don't want to remove those files.
-    js_file_list = Dir["#{$js_dest}/**/*"].reject {|f| /standalone/.match(f) }
-    js_file_list.each do |f|
-      log_deletion(f)
-      FileUtils.rm(f)
-    end
-  end
-  desc "Clean Hugo-generated content"
-  task :hugo do
-    log_deletion($hugo_dest)
-    FileUtils.rm_rf($hugo_dest)
-  end
-end
-
-
-########
-# Build
-desc      "Compile compressed JS and compressed CSS"
-task      :build => ['clean', 'build:js']
-namespace :build do
-  task :js  => ["#{$js_dest}", 'clean:js']   do compile_js(debug: false); end
-
-  ################
-  # Build : Debug
-  desc      "Compile human-readable JS"
-  task      :debug => ["#{$js_dest}", 'build:debug:js']
-  namespace :debug do
-
-    desc "Compile human-readable JS"
-    task :js  => ["#{$js_dest}"]  do compile_js(debug: true); end
-
-  end
-end
-
-
-########
-# Watch
-desc      "Rebuild compressed JS on file saves"
-task      :watch do sh 'bundle exec guard -g js'; end
-namespace :watch do
-
-  task :js  do sh 'bundle exec guard -g js'; end
-
-  ################
-  # Watch : Debug
-  desc      "Rebuild human-readable JS and CSS content on file saves"
-  task      :debug => ['clean'] do sh 'bundle exec guard -g debug_js'; end
-  namespace :debug do
-    task :js  do sh 'bundle exec guard -g debug_js'; end
-  end
-end
-
-
 #########
 # Deploy
 desc      "Build and deploy static artifacts"
 task      :deploy => [
                       'clean',
                       'deploy:fetch_archived_content',
-                      'build:js',
                       'hugo'
                      ] do do_deploy(); end
 namespace :deploy do

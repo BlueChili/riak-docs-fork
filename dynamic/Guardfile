@@ -25,19 +25,3 @@ directories %w(dynamic data) \
 # As noted on
 # https://github.com/guard/guard/wiki/Add-Readline-support-to-Ruby-on-Mac-OS-X
 
-
-
-group :js do
-  guard 'rake', :task => 'build:js' do
-    watch(%r{^dynamic/js/.*\.js$})
-    watch(%r{^dynamic/js/.*\.coffee$})
-  end
-end
-
-group :debug_js do
-  guard 'rake', :task => 'build:debug:js' do
-    watch(%r{^dynamic/js/.*\.js$})
-    watch(%r{^dynamic/js/.*\.coffee$})
-  end
-end
-
